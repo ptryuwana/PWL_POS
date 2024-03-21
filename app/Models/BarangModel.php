@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BarangModel extends Model
 {
-    public function kategori(): BelongsTo{
-        return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
-    }
+    use HasFactory;
+    // public function kategori(): BelongsTo{
+    //     return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
+    // }
 }
