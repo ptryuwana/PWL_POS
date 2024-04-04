@@ -8,7 +8,7 @@
     <div class="container">
         <div class="card card-primary">
             <div class="card-header">
-            <h3 class="card-title">Edit kategori</h3>
+            <h3 class="card-title">Edit Kategori</h3>
             </div>
 
             <form method="post" action="../{{ $data->kategori_id }}">

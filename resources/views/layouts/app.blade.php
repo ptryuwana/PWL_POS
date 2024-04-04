@@ -38,8 +38,8 @@
 </div>
 
 <strong>
-    <a href="{{ config('app.company_url', '#') }}">
-        {{ config('app.company_name', 'My company') }}
+    <a href="{{ config('app.company_url', 'https://github.com/ptryuwana/PWL_POS.git') }}">
+        {{ config('app.company_name', 'PWL-POS | PUTRA-18') }}
     </a>
 </strong> 
 @stop
