@@ -56,4 +56,4 @@ Route::get('transaksi/{transaksi}', [TransaksiController::class, 'show']);
 Route::put('transaksi/{transaksi}', [TransaksiController::class, 'update']);
 Route::delete('transaksi/{transaksi}', [TransaksiController::class, 'destroy']);
 
-// Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');

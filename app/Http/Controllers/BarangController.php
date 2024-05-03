@@ -70,6 +70,7 @@ class BarangController extends Controller
             'kategori_id' => 'required|integer',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         BarangModel::create([
             'barang_kode' => $request->barang_kode,
@@ -77,6 +78,7 @@ class BarangController extends Controller
             'kategori_id' => $request->kategori_id,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
+            'image' => $request->image->hashName(),
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
@@ -122,6 +124,7 @@ class BarangController extends Controller
             'kategori_id' => 'required|integer',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         BarangModel::find($id)->update([
@@ -130,6 +133,7 @@ class BarangController extends Controller
             'kategori_id' => $request->kategori_id,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
+            'image' => $request->image->hashName(),
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');
