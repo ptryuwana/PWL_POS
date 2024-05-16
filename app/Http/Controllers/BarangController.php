@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangModel;
 use App\Models\KategoriModel;
-use App\Models\m_barang;
-use App\Models\m_kategori;
-use App\Models\m_user;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,13 +22,13 @@ class BarangController extends Controller
 
         $activeMenu = 'barang';
 
-        $kategori = m_user::all();
+        $kategori = KategoriModel::all();
 
         return view('barang.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'kategori' => $kategori]);
     }
     public function list(Request $request)
     {
-        $barangs = BarangModel::select('barang_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'kategori_id')->with('kategori');
+        $barangs = BarangModel::select('barang_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'kategori_id', 'image')->with('kategori');
 
         if ($request->kategori_id) {
             $barangs->where('kategori_id', $request->kategori_id);
@@ -70,15 +67,22 @@ class BarangController extends Controller
             'kategori_id' => 'required|integer',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required|file|image|max:2048'
         ]);
+
+        $extfile = $request->image->getClientOriginalName();
+        $namaFile = 'web-' . time() . "." . $extfile;
+        $path = $request->image->move('gambarT', $namaFile);
+        $path = str_replace("\\", "//", $path);
+        $pathBaru = asset('gambarT/' . $namaFile);
+
         BarangModel::create([
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'kategori_id' => $request->kategori_id,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
-            'image' => $request->image->hashName(),
+            'image' => $pathBaru,
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
@@ -124,8 +128,14 @@ class BarangController extends Controller
             'kategori_id' => 'required|integer',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required|file|image|max:2048'
         ]);
+
+        $extfile = $request->image->getClientOriginalName();
+        $namaFile = 'web-' . time() . "." . $extfile;
+        $path = $request->image->move('gambarT', $namaFile);
+        $path = str_replace("\\", "//", $path);
+        $pathBaru = asset('gambarT/' . $namaFile);
 
         BarangModel::find($id)->update([
             'barang_kode' => $request->barang_kode,
@@ -133,7 +143,7 @@ class BarangController extends Controller
             'kategori_id' => $request->kategori_id,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
-            'image' => $request->image->hashName(),
+            'image' => $pathBaru,
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');

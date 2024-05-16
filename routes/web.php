@@ -9,6 +9,7 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\Welcome2Controller;
@@ -29,6 +30,9 @@ use Monolog\Level;
 */
 
 Route::get('/', [Welcome2Controller::class, 'index']);
+
+Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
+Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
 
 Route::group(['prefix' => 'user'], function() {
     Route::get('/', [UserController::class, 'index']);          // menampilkan halaman awal user
